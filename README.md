@@ -7,7 +7,7 @@
 - Tiene un comando de ping para hacer ping y pong, clásico.
 - Tiene un comando de suggest (ahora mismo deshablitado) para hacer sugerencias.
 
-##Parte de Drive
+## Parte de Drive
 
 - Implementa una parte total de Drive para descargar una imagen que previamente le pasamos por código.
 - Implementa en el bot un comando para sacar una imagen que previamente se descarga.
