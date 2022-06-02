@@ -32,7 +32,7 @@ import java.io.File;
 
 public class Main {
 
-    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.YjHVgg.vtooj79fOfffIUE6xSjkPqCkQJY";
+    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.G5xy49.Z9IaQdPpSKrCJbj8GoKVQaCsktj5FBmmdQhdRQ";
     final static DiscordClient client = DiscordClient.create(token); //Creamos un cliente de Discord (para el bot).
     final static GatewayDiscordClient gateway = client.login().block(); //Creamos el gateaway para que dicho cliente se logee.
 
@@ -108,7 +108,7 @@ public class Main {
 
                 InputStream fileAsInputStream = null;
                 try {
-                    fileAsInputStream = new FileInputStream("bardo.jpeg");
+                    fileAsInputStream = new FileInputStream("ExamenDiscord/imagenes/bardo.jpeg");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -120,14 +120,14 @@ public class Main {
             }
 
             if (message.getContent().startsWith("!list")){
-                File folder = new File("\\imagenes");
+                File folder = new File("ExamenDiscord/imagenes");
                 File[] listOfFiles = folder.listFiles();
-                String auxiliar = null;
+                String auxiliar = "";
 
                 for (File file : listOfFiles) {
                     if (file.isFile()) {
 
-                        auxiliar = auxiliar + file.getName();
+                        auxiliar = auxiliar + file.getName() + "/";
 
                     }
                 }
