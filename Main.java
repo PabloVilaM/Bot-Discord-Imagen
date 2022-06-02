@@ -20,19 +20,17 @@ import discord4j.rest.util.Color;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import reactor.core.publisher.Mono;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Array;
+import java.security.GeneralSecurityException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.io.File;
 
 public class Main {
 
-    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.G5xy49.Z9IaQdPpSKrCJbj8GoKVQaCsktj5FBmmdQhdRQ";
+    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GTSltT.ppwKgHVMrNwMPHKW2NDRpHS5ugpa8qMZfqAZJI";
     final static DiscordClient client = DiscordClient.create(token); //Creamos un cliente de Discord (para el bot).
     final static GatewayDiscordClient gateway = client.login().block(); //Creamos el gateaway para que dicho cliente se logee.
 
@@ -119,22 +117,33 @@ public class Main {
                         .build()).subscribe();
             }
 
-            if (message.getContent().startsWith("!list")){
-                File folder = new File("ExamenDiscord/imagenes");
-                File[] listOfFiles = folder.listFiles();
-                String auxiliar = "";
-
-                for (File file : listOfFiles) {
-                    if (file.isFile()) {
-
-                        auxiliar = auxiliar + file.getName() + "/";
-
-                    }
+            if (message.getContent().startsWith("!drive")){
+                try {
+                    DriveQuickstart.drive();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
                 }
+                EmbedCreateSpec embed = EmbedCreateSpec.builder()
+                        .color(Color.GREEN)
+                        .title("Splash")
+                        .image("attachment://auxiliar.jpg")
+                        .build();
 
-                final MessageChannel channel2 = message.getChannel().block();
-                channel.createMessage(auxiliar).block();
+                InputStream fileAsInputStream = null;
+                try {
+                    fileAsInputStream = new FileInputStream("auxiliar.jpg");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                channel.createMessage(MessageCreateSpec.builder()
+                        .content("Pensabas que era un bebe yoda pero es un Splah art")
+                        .addFile("auxiliar.jpg", fileAsInputStream)
+                        .addEmbed(embed)
+                        .build()).subscribe();
             }
+
 
         });
 
