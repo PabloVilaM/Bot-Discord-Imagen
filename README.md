@@ -11,3 +11,6 @@
 
 - Implementa una parte total de Drive para descargar una imagen que previamente le pasamos por código.
 - Implementa en el bot un comando para sacar una imagen que previamente se descarga.
+
+## PROBLEMA
+- Se ha subido mal, he subido una version antigua y en el examen estoy con esa version, al llegar a casa subo la buena pero he logrado improvisar una funcional en el examen
