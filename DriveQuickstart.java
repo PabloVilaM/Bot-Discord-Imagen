@@ -18,7 +18,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-/* class to demonstarte use of Drive files list API */
+/* Clase para ver como funciona Drive */
 public class DriveQuickstart {
     /** Application name. */
     private static final String APPLICATION_NAME = "Google Drive API Java Quickstart";
@@ -41,14 +41,14 @@ public class DriveQuickstart {
      * @throws IOException If the credentials.json file cannot be found.
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        // Load client secrets.
+        // Carga la información de credenciales del cliente.
         InputStream in = DriveQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        // Build flow and trigger user authorization request.
+        // Carga y triggerea una credential
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
@@ -56,18 +56,18 @@ public class DriveQuickstart {
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("847529586564-i3a2kfioiqs98oa4qcu4ou033tq25t39.apps.googleusercontent.com");
-        //returns an authorized Credential object.
+        //Retorna un objeto autorizado.
         return credential;
     }
 
     public static void drive() throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
+        // Se construye una nueva api autorizada
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        // Print the names and IDs for up to 10 files.
+        // Imprime los nombres de hasta 10 archivos
         FileList result = service.files().list()
                 .setQ("name contains 'imagenesBot' and mimeType = 'application/vnd.google-apps.folder'")
                 .setPageSize(10)
@@ -92,8 +92,8 @@ public class DriveQuickstart {
             List<File> filesImagenes = resultImagenes.getFiles();
             for (File file : filesImagenes) {
                 System.out.printf("Imagen: %s\n", file.getName());
-                // guardamos el 'stream' en el fichero aux.jpeg qieune qe existir
-                OutputStream outputStream = new FileOutputStream("/home/dam1/IdeaProjects/Bot-Discord-Drive2/ExamenDiscord/bbyoda.jpg");
+                // Guardamos el stream, tiene que existir el archivo
+                OutputStream outputStream = new FileOutputStream("C:\\Users\\Carlos Vila\\Desktop\\ProyectosUwU\\Bot-Discord-Drive\\auxiliar.jpg");
                 service.files().get(file.getId())
                         .executeMediaAndDownloadTo(outputStream);
                 outputStream.flush();
