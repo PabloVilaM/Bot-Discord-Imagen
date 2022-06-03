@@ -29,7 +29,7 @@ import java.util.Optional;
 
 public class Main {
 
-    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GH2wyT.3c8miZyHCb2N335os_rsvdfG4YpVGvLjgtpyQ4";
+    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GD4sBV.APhj28tw2WUL02FEHnQ3PySrbJxA-30flohTbc";
     final static DiscordClient client = DiscordClient.create(token); //Creamos un cliente de Discord (para el bot).
     final static GatewayDiscordClient gateway = client.login().block(); //Creamos el gateaway para que dicho cliente se logee.
 
@@ -141,6 +141,11 @@ public class Main {
                         .addFile("bbyoda.jpg", fileAsInputStream)
                         .addEmbed(embed)
                         .build()).subscribe();
+            }
+            if(message.getContent().startsWith("/pdf")){
+                final MessageChannel channel2 = message.getChannel().block();
+                channel.createMessage("Comando añadido").block();
+
             }
 
         });
