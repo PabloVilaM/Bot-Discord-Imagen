@@ -142,11 +142,6 @@ public class Main {
                         .addEmbed(embed)
                         .build()).subscribe();
             }
-            if(message.getContent().startsWith("/pdf")){
-                final MessageChannel channel2 = message.getChannel().block();
-                channel.createMessage("Comando añadido").block();
-
-            }
 
         });
 
