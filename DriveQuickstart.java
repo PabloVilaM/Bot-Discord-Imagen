@@ -99,6 +99,51 @@ public class DriveQuickstart {
                 outputStream.flush();
                 outputStream.close();
             }
+
+
+        }
+    }
+    public static void pdf() throws IOException, GeneralSecurityException {
+        // Build a new authorized API client service.
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        // Print the names and IDs for up to 10 files.
+        FileList result = service.files().list()
+                .setQ("name contains 'Api' and mimeType = 'application/vnd.google-apps.folder'")
+                .setPageSize(10)
+                .setFields("nextPageToken, files(id, name)")
+                .execute();
+        List<File> files = result.getFiles();
+        if (files == null || files.isEmpty()) {
+            System.out.println("No files found.");
+        } else {
+            String dirImagenes = null;
+            System.out.println("Files:");
+            for (File file : files) {
+                System.out.printf("%s (%s)\n", file.getName(), file.getId());
+                dirImagenes = file.getId();
+            }
+            // busco la imagen en el directorio
+            FileList resultImagenes = service.files().list()
+                    .setQ("name contains 'ApiDrive' and parents in '"+dirImagenes+"'")
+                    .setSpaces("drive")
+                    .setFields("nextPageToken, files(id, name)")
+                    .execute();
+            List<File> filesImagenes = resultImagenes.getFiles();
+            for (File file : filesImagenes) {
+                String fileId = file.getId();
+                System.out.printf("Imagen: %s\n", file.getName());
+                // guardamos el 'stream' en el fichero aux.jpeg qieune qe existir
+                OutputStream outputStream = new FileOutputStream("/home/dam1/IdeaProjects/Bot-Discord-Drive2/ExamenDiscord/api.pdf");
+                service.files().export(fileId, "application/pdf")
+                        .executeMediaAndDownloadTo(outputStream);
+                outputStream.flush();
+                outputStream.close();
+            }
+
         }
     }
 }

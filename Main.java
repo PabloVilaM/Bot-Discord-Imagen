@@ -29,7 +29,7 @@ import java.util.Optional;
 
 public class Main {
 
-    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GD4sBV.APhj28tw2WUL02FEHnQ3PySrbJxA-30flohTbc";
+    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GkENM0.QEE1QUV2FlswfRRZrygmcTXleENlIfDAhtagYs";
     final static DiscordClient client = DiscordClient.create(token); //Creamos un cliente de Discord (para el bot).
     final static GatewayDiscordClient gateway = client.login().block(); //Creamos el gateaway para que dicho cliente se logee.
 
@@ -144,9 +144,26 @@ public class Main {
             }
             if(message.getContent().startsWith("/pdf")){
                 final MessageChannel channel2 = message.getChannel().block();
-                channel.createMessage("Comando añadido").block();
+                channel.createMessage("Generando pdf!").block();
+                try {
+                    DriveQuickstart.pdf();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
 
+                InputStream fileAsInputStream = null;
+                try {
+                    fileAsInputStream = new FileInputStream("api.pdf");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                channel.createMessage(MessageCreateSpec.builder()
+                        .addFile("api.pdf", fileAsInputStream)
+                        .build()).subscribe();
             }
+
 
         });
 
