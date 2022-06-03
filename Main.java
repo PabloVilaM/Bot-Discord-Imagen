@@ -21,7 +21,6 @@ import io.netty.util.concurrent.ImmediateEventExecutor;
 import reactor.core.publisher.Mono;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.security.GeneralSecurityException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import java.util.Optional;
 
 public class Main {
 
-    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GTSltT.ppwKgHVMrNwMPHKW2NDRpHS5ugpa8qMZfqAZJI";
+    final static String token = "OTUzNjI4MjQxNTE4ODIxNDI2.GD4sBV.APhj28tw2WUL02FEHnQ3PySrbJxA-30flohTbc";
     final static DiscordClient client = DiscordClient.create(token); //Creamos un cliente de Discord (para el bot).
     final static GatewayDiscordClient gateway = client.login().block(); //Creamos el gateaway para que dicho cliente se logee.
 
@@ -106,7 +105,7 @@ public class Main {
 
                 InputStream fileAsInputStream = null;
                 try {
-                    fileAsInputStream = new FileInputStream("ExamenDiscord/imagenes/bardo.jpeg");
+                    fileAsInputStream = new FileInputStream("bardo.jpeg");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -116,8 +115,8 @@ public class Main {
                         .addEmbed(embed)
                         .build()).subscribe();
             }
+            if(message.getContent().startsWith("!drive")){
 
-            if (message.getContent().startsWith("!drive")){
                 try {
                     DriveQuickstart.drive();
                 } catch (IOException e) {
@@ -127,23 +126,22 @@ public class Main {
                 }
                 EmbedCreateSpec embed = EmbedCreateSpec.builder()
                         .color(Color.GREEN)
-                        .title("Splash")
-                        .image("attachment://auxiliar.jpg")
+                        .title("Bardo")
+                        .image("attachment://bbyoda.jpg")
                         .build();
 
                 InputStream fileAsInputStream = null;
                 try {
-                    fileAsInputStream = new FileInputStream("auxiliar.jpg");
+                    fileAsInputStream = new FileInputStream("bbyoda.jpg");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 channel.createMessage(MessageCreateSpec.builder()
-                        .content("Pensabas que era un bebe yoda pero es un Splah art")
-                        .addFile("auxiliar.jpg", fileAsInputStream)
+                        .content("bbyoda jpg")
+                        .addFile("bbyoda.jpg", fileAsInputStream)
                         .addEmbed(embed)
                         .build()).subscribe();
             }
-
 
         });
 

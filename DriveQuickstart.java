@@ -60,7 +60,7 @@ public class DriveQuickstart {
         return credential;
     }
 
-    public static void main(String... args) throws IOException, GeneralSecurityException {
+    public static void drive() throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
@@ -93,7 +93,7 @@ public class DriveQuickstart {
             for (File file : filesImagenes) {
                 System.out.printf("Imagen: %s\n", file.getName());
                 // guardamos el 'stream' en el fichero aux.jpeg qieune qe existir
-                OutputStream outputStream = new FileOutputStream("C:\\Users\\Carlos Vila\\Desktop\\ProyectosUwU\\Bot-Discord-Drive\\auxiliar.jpg");
+                OutputStream outputStream = new FileOutputStream("/home/dam1/IdeaProjects/Bot-Discord-Drive2/ExamenDiscord/bbyoda.jpg");
                 service.files().get(file.getId())
                         .executeMediaAndDownloadTo(outputStream);
                 outputStream.flush();
