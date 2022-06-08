@@ -89,6 +89,8 @@ public class Main {
                                .then(msg.addReaction(ReactionEmoji.unicode("\u274c"))))
                        .subscribe();
             }*/
+            //Si el mensaje empieza por ping, responde con un test y se le añaden reacciones, esto no se pedía pero lo 
+            //hice por gusto
             if (message.getContent().startsWith("!ping")){
                 channel.createMessage("Test")
                         .flatMap(msg -> msg.addReaction(ReactionEmoji.unicode("\u2611"))
@@ -96,6 +98,7 @@ public class Main {
                                 .then(msg.addReaction(ReactionEmoji.unicode("\u274c"))))
                         .subscribe();
             }
+            //Si el mensaje empieza con !embed, crea un embed de color verde llamado bardo y le añadimos la imagen correspondiente.
             if(message.getContent().startsWith("!embed")){
 
                 EmbedCreateSpec embed = EmbedCreateSpec.builder()
@@ -116,6 +119,8 @@ public class Main {
                         .addEmbed(embed)
                         .build()).subscribe();
             }
+            //Si el mensaje empieza por !drive, llama a drive que descarga la imagen correspondiente y posteriornmente
+            //creamos un embved y le ponemos la imagen que hemos descargado
 
             if (message.getContent().startsWith("!drive")){
                 try {
@@ -143,6 +148,7 @@ public class Main {
                         .addEmbed(embed)
                         .build()).subscribe();
             }
+            //SI el comando empieza por !list, nos lista los archivos que haya en el directorio que le pasamos de esa carpeta
             if (message.getContent().startsWith("!list")) {
                 File folder = new File("ExamenDiscord/imagenes");
                 File[] listOfFiles = folder.listFiles();
@@ -165,6 +171,7 @@ public class Main {
     }
 
 
+    //Para leer ids, no importa para clase.
     public static void leersID(){
         ArrayList<String> lista = new ArrayList<>();
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
@@ -173,7 +180,7 @@ public class Main {
         });
 
     }
-
+    //Para listar mensajes, no importa para clase.
     public static List<Message> getMessagesOfChannel(MessageChannel channel){
         Snowflake now = Snowflake.of(Instant.now());
         return channel.getMessagesBefore(now).collectList().block();
